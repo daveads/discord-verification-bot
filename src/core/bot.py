@@ -4,6 +4,11 @@ import discord
 from src.core.startverify  import StartVerify
 from src.core.verifybtn    import VerifyBtn
 from src.core.userverify   import UserVerify
+from src.core.config_parser import BotConfigs
+
+
+bot_configs = BotConfigs()
+
 
 class VerificationBot(commands.Bot):
     def __init__(self):
@@ -21,5 +26,6 @@ class VerificationBot(commands.Bot):
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
         print('------')
-        c = self.get_guild(1024269429229490186)
+        c = self.get_guild(bot_configs.guild_id())
         print("guild**********", c)
+        print('------')

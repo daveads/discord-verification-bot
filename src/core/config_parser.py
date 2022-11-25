@@ -28,8 +28,10 @@ class BotConfigs:
             self.data = tomllib.load(f)
         
     def verfi_image(self):
-        
         image = "img/" + self.data['image']['verfi_image']
-
         return image
 
+
+    def guild_id(self):
+        id = self.data['guild']['guild_id']
+        return id
