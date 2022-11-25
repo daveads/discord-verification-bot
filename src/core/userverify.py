@@ -1,4 +1,3 @@
-import asyncio
 import discord
 
 class UserVerify(discord.ui.View):
@@ -16,21 +15,12 @@ class UserVerify(discord.ui.View):
         user_id = embeds['footer']['text']
         print("user to give role id", user_id)
 
-        await interaction.response.defer()
-        await interaction.delete_original_response()
-        await interaction.channel.purge(limit=1)
-
-        
-        """
-        print("see >>>", self.user)
-        #print("see >>>", self.selfie_verf.id)
+        self.user = await interaction.guild.fetch_member(user_id)
         await self.user.send("verification accepted")
-        #await interaction.channel.purge(limit=2)
+
         await interaction.response.defer()
         await interaction.delete_original_response()
         await interaction.channel.purge(limit=1)
-   
-        """
 
         
     
