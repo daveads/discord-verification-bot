@@ -1,11 +1,14 @@
 import asyncio
 from discord.ext import commands
 import discord
+import os
 
+from dotenv import load_dotenv
 from src.core.startverify  import StartVerify
 from src.core.bot   import VerificationBot
 from src.core.config_parser import BotConfigs
 
+load_dotenv()
 bot = VerificationBot()
 bot_configs = BotConfigs()
 
@@ -19,7 +22,7 @@ async def prepare(ctx: commands.Context):
 
 
 async def main():
-    await bot.start('MTAzMzQwMTI5NTc2MTA2MDAwMg.Gr5jg7.lrFdyxe5ohlJZkTkRMkO6pLqsplQ0Txye6Fw4E')
+    await bot.start(os.getenv('token'))
     
     
 
