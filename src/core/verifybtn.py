@@ -2,7 +2,10 @@ import asyncio
 import discord
 from discord.ui import Button, View
 
-from src.core.userverify import UserVerify
+
+from src.core.selfieverify import SelfieVerify
+from src.core.ageverify    import AgeVerify
+
 from src.core.config_parser import BotConfigs
 
 bot_configs = BotConfigs()
@@ -100,7 +103,7 @@ class VerifyBtn(discord.ui.View):
            
                 """
        
-                channel_name = f"selfie-{interaction.user.id}"
+                channel_name = f"selfie_ver-{interaction.user.id}"
 
       
                 userverify_channels = []
@@ -179,8 +182,8 @@ class VerifyBtn(discord.ui.View):
 
                     image1 = await user_reply(self.user, self.bot, chh, channel_created)
 
-                    # SELFIE-VERIFICATION 
-                    selfie_verf = discord.utils.get(guild.channels, id=1034398479759450172)
+                    # SELFIE-VERIFICATION CHANNEL
+                    selfie_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("self_verification"))
 
                     # First Embed 
                     embed1=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
@@ -213,7 +216,7 @@ class VerifyBtn(discord.ui.View):
            
                     await selfie_verf.send(embed=embed1)
            
-                    await selfie_verf.send(embed=embed2, view=UserVerify(self.bot))
+                    await selfie_verf.send(embed=embed2, view=SelfieVerify(self.bot))
            
                     print(channel_created.id)
            
@@ -300,7 +303,7 @@ class VerifyBtn(discord.ui.View):
 
                     category = discord.utils.get(interaction.guild.categories, id=1034398945083916338)
        
-                    channel_name = f"age-{interaction.user.id}"
+                    channel_name = f"age_ver-{interaction.user.id}"
 
       
                     userverify_channels = []
@@ -331,6 +334,69 @@ class VerifyBtn(discord.ui.View):
                         chh = discord.utils.get(guild.channels, name=channel_name)
                         # interaction.user.mention
                         await chh.send(interaction.user.mention)
+
+
+                        embed_first=discord.Embed(color=discord.Color.blue())
+                        #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
+                        embed_first.set_author(name=f"{interaction.guild.name} Age Verification", icon_url=f"{interaction.guild.icon.url}")
+                        embed_first.add_field(name="First picture", value=f"make a selfie of you holding your id card** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+
+                
+                        embed_wanning = discord.Embed(color=discord.Color.blue())
+                        embed_wanning.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
+                        embed_wanning.add_field(name="------------------------",value="Waiting for image  \n\n  **Timeout in 5 minutes**", inline=True)
+                    
+
+                        await chh.send(embed=embed_first)
+                        await chh.send(embed=embed_wanning)
+
+                        await asyncio.sleep(2)
+
+
+                        image1 = await user_reply(self.user, self.bot, chh, channel_created)
+
+                        # AGE-VERIFICATION CHANNEL
+                        age_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("age_Verification"))
+
+                        # First Embed 
+                        embed1=discord.Embed(title=f"{self.user} Age verification",  description="checking", color=discord.Color.blue())
+                        embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
+                        embed1.add_field(name="Gender", value=f"Male", inline=True)
+                        embed1.add_field(name="Age", value=f"24", inline=True)
+                        embed1.set_image(url=image1)
+                        embed1.set_footer(text=f"{self.user.id}")
+
+
+                        if (image1):
+                            embed_second=discord.Embed(color=discord.Color.blue())
+                            #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
+                            embed_second.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
+                            embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji **EMOJI** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+
+                            await chh.send(embed=embed_second)
+                            image2 = await user_reply(self.user, self.bot, chh, channel_created)
+
+                        #SECOND IMAGE EMBED 
+                        embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
+                        embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
+                        embed2.add_field(name="Gender", value=f"Male", inline=True)
+                        embed2.add_field(name="Age", value=f"24", inline=True)
+                        embed2.set_image(url=image2)
+                        embed2.set_footer(text=f"{self.user.id}")
+           
+                        await age_verf.send(embed=embed1)
+           
+                        await age_verf.send(embed=embed2, view=AgeVerify(self.bot))
+           
+                        print(channel_created.id)
+           
+                        if (image2):
+                            await asyncio.sleep(10)
+                            await channel_created.delete()
+           
+           
+                    
+
 
 
 

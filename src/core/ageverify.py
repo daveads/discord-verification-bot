@@ -1,19 +1,18 @@
 import discord
-from discord.ui import Button, View
 from src.core.config_parser import BotConfigs
 
 from src.btns.decline_btn import DeclineBtn as dec
 bot_configs = BotConfigs()
 
-class UserVerify(discord.ui.View):
+class AgeVerify(discord.ui.View):
     def __init__(self, bot):
         super().__init__(timeout=None)
         self.bot = bot
 
-    @discord.ui.button(label='Accept', style=discord.ButtonStyle.green, custom_id='accept')
+    @discord.ui.button(label='Accept', style=discord.ButtonStyle.green, custom_id='accepta')
     async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        roleObj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("self_ver"))
+        roleObj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("age_ver"))
 
         embeds = interaction.message.embeds[0].to_dict()
         
@@ -34,7 +33,7 @@ class UserVerify(discord.ui.View):
 
 
     #Decline
-    @discord.ui.button(label='decline', style=discord.ButtonStyle.red, custom_id='decline')
+    @discord.ui.button(label='decline', style=discord.ButtonStyle.red, custom_id='declinea')
     async def decline(self, interaction: discord.Interaction, button: discord.ui.Button):
         
         """
