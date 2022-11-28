@@ -371,7 +371,7 @@ class VerifyBtn(discord.ui.View):
                             embed_second=discord.Embed(color=discord.Color.blue())
                             #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
                             embed_second.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
-                            embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji **EMOJI** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+                            embed_second.add_field(name="Second picture", value=f"Take a clear picture of the ID CARD \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
 
                             await chh.send(embed=embed_second)
                             image2 = await user_reply(self.user, self.bot, chh, channel_created)
