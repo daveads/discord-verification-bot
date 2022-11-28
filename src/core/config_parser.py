@@ -29,11 +29,15 @@ class BotConfigs:
         id = self.data['guild']['guild_id']
         return id
 
-    def channel_id(self):
+    def channel_id(self, chn):
 
-        pass
+        if chn == "self_verification":
+            return self.data['channels_id']['self_verification']
 
+        if chn == "age_Verification":
+            return self.data['channels_id']['age_Verification']
 
+ 
     def roles(self, role):
 
         #verf_roles
