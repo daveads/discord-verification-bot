@@ -4,7 +4,11 @@ import discord
 from src.core.startverify  import StartVerify
 from src.core.verifybtn    import VerifyBtn
 from src.core.userverify   import UserVerify
+from src.btns.custom_decline_btn import custom_decline
+from src.btns.decline_btn import DeclineBtn
+
 from src.core.config_parser import BotConfigs
+
 
 
 bot_configs = BotConfigs()
@@ -21,6 +25,9 @@ class VerificationBot(commands.Bot):
         self.add_view(StartVerify(self))
         self.add_view(VerifyBtn(self))
         self.add_view(UserVerify(self))
+        self.add_view(custom_decline())
+        self.add_view(DeclineBtn())
+
 
 
     async def on_ready(self):
