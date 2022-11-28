@@ -38,9 +38,6 @@ class VerifyBtn(discord.ui.View):
     async def emoji(self, interaction: discord.Interaction, button: discord.ui.Button):
        
 
-
-
-       #user = await self.bot.fetch_user(interaction.user.id)
        self.user = await interaction.guild.fetch_member(interaction.user.id)
        self.self_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("self_ver"))
 
@@ -103,7 +100,7 @@ class VerifyBtn(discord.ui.View):
            
                 """
        
-                channel_name = f"emoji-{interaction.user.id}"
+                channel_name = f"selfie-{interaction.user.id}"
 
       
                 userverify_channels = []
@@ -113,7 +110,8 @@ class VerifyBtn(discord.ui.View):
        
        
                 print(userverify_channels)
-    
+
+                #checks if there is any pending channel
                 for i in userverify_channels:
                     if str(self.user.id) in i:
                         self.user_chan = True
@@ -135,7 +133,7 @@ class VerifyBtn(discord.ui.View):
            
        
        
-                    # THE CHANNEL
+                    #THE CHANNEL
                     chh = discord.utils.get(guild.channels, name=channel_name)
                     # interaction.user.mention
                     await chh.send(interaction.user.mention)
@@ -183,7 +181,7 @@ class VerifyBtn(discord.ui.View):
 
                     # SELFIE-VERIFICATION 
                     selfie_verf = discord.utils.get(guild.channels, id=1034398479759450172)
-                    
+
                     # First Embed 
                     embed1=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
                     embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
@@ -207,7 +205,7 @@ class VerifyBtn(discord.ui.View):
 
                     #SECOND IMAGE EMBED 
                     embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
-                    embed2.add_field(name="FIRST IMAGE", value=f"T", inline=True)
+                    embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
                     embed2.add_field(name="Gender", value=f"Male", inline=True)
                     embed2.add_field(name="Age", value=f"24", inline=True)
                     embed2.set_image(url=image2)
@@ -245,10 +243,107 @@ class VerifyBtn(discord.ui.View):
     
     
     
-    @discord.ui.button(label='Age Verifications', style=discord.ButtonStyle.grey, custom_id='age_verf', disabled = True)
+    @discord.ui.button(label='Age Verifications', style=discord.ButtonStyle.grey, custom_id='age_verf')
     async def age_verf(self, interaction: discord.Interaction, button: discord.ui.Button):
         
         """
         Do something 
         """
+        self.user = await interaction.guild.fetch_member(interaction.user.id)
+        self.age_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("age_ver"))
+
+        #gender roles
+        self.role_male =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("male")) 
+        self.role_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("female"))
+        self.role_trans_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("trans_female"))
+        self.role_non_binary =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("non_binary"))
+        self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("agender"))
+        self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("bigender"))
+        self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("genderfluid"))
+       
+        #age roles 
+        self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('18-22')) 
+        self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('23-27')) 
+        self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('28-30+')) 
+
+        gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid]
+       
+        age_roles = [self.a18_22, self.a23_27, self.a28_30]
+       
+        import numpy as np
+        gender_check = np.isin(gender_roles, self.user.roles)
+
+        age_check = np.isin(age_roles, self.user.roles)
+
+        if True in gender_check:
+            if True in age_check:
+                if self.age_ver_role_obj in self.user.roles:
+                    button.disabled = True
+                    button.style = discord.ButtonStyle.green
+                    button.label = "Already Verified"
+                    await interaction.user.send("Already Verified")
+                    await interaction.response.edit_message(view=self)
+
+                else:
+
+                    guild = interaction.guild
+
+                    admin_role = guild.get_role(1034410474189623347)
+
+                    overwrites = {
+                        guild.default_role: discord.PermissionOverwrite(view_channel=False),
+                        admin_role: discord.PermissionOverwrite(view_channel=True),
+                        guild.me: discord.PermissionOverwrite(view_channel=True, read_messages=True),
+                        interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages = True, attach_files = True) 
+                    }
+       
+
+                    category = discord.utils.get(interaction.guild.categories, id=1034398945083916338)
+       
+                    channel_name = f"age-{interaction.user.id}"
+
+      
+                    userverify_channels = []
+       
+                    for i in category.channels:
+                        userverify_channels.append(i.name)
+       
  
+                    #checks if there is any pending channel
+                    for i in userverify_channels:
+                        if str(self.user.id) in i:
+                            self.user_chan = True
+
+                    if self.user_chan:        
+                        await interaction.response.edit_message(content="verification pending", view=None) 
+
+                    else:
+                        await guild.create_text_channel(channel_name,  category=category, overwrites=overwrites)
+           
+                        channel_created = discord.utils.get(guild.channels, name=channel_name)
+                        button = Button(label="Go to Channel", url=f"https://discord.com/channels/{interaction.guild.id}/{channel_created.id}" ,  style=discord.ButtonStyle.grey)
+                        view = View()
+                        view.add_item(button)
+                        await interaction.response.edit_message(content="Verification started click the button below to get to the channel! ", view=view)
+
+
+                        #THE CHANNEL
+                        chh = discord.utils.get(guild.channels, name=channel_name)
+                        # interaction.user.mention
+                        await chh.send(interaction.user.mention)
+
+
+
+
+
+
+
+
+
+            else:
+                await interaction.response.defer()
+                await interaction.user.send("you are missing age role")
+
+        else:
+            await interaction.response.defer()
+            await interaction.user.send("you are missing gender role")
