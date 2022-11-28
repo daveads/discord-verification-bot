@@ -1,25 +1,24 @@
 [creator]
 god_mode = 0
 
-[roles]
-role = 1034400796189655090
+[verf_roles]
 age_ver = 1046031213015605248
 self_ver = 1046031060481360002
 admin = 0
 moderator = 0
 
 [gender]
-male = 0
-female = 0
-trans-female = 0
-non-binary = 0
+male = 1046713076172464199
+female = 1046713218996912158
+trans_female = 0
+non_binary = 0
 agender = 0
 bigender = 0
 genderfluid = 0
 
-[age_roles]
+[age_role]
 '18-22' = 0
-'23-27' = 0
+'23-27' = 1046719082931683328
 '28-30+' = 0
 
 

@@ -1,6 +1,8 @@
 import discord
+from discord.ui import Button, View
 from src.core.config_parser import BotConfigs
 
+from src.btns.decline_btn import DeclineBtn as dec
 bot_configs = BotConfigs()
 
 class UserVerify(discord.ui.View):
@@ -18,22 +20,28 @@ class UserVerify(discord.ui.View):
         user_id = embeds['footer']['text']
         print("user to give role id", user_id)
 
-        self.user = await interaction.guild.fetch_member(user_id)
+        user = await interaction.guild.fetch_member(user_id)
         
         # add the verifiy role
-        await self.user.add_roles(roleObj)
+        await user.add_roles(roleObj)
     
-        await self.user.send("verification accepted")
+        await user.send("verification accepted")
         await interaction.response.defer()
         await interaction.delete_original_response()
         await interaction.channel.purge(limit=1)
 
-        
     
 
+
+    #Decline
     @discord.ui.button(label='decline', style=discord.ButtonStyle.red, custom_id='decline')
     async def decline(self, interaction: discord.Interaction, button: discord.ui.Button):
- 
-        await interaction.response.send_message("declined")
-
         
+        """
+        embeds = interaction.message.embeds[0].to_dict()
+        user_id = embeds['footer']['text']
+
+        user = await interaction.guild.fetch_member(user_id)
+        """
+
+        await interaction.response.edit_message(view=dec())

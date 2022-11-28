@@ -3,6 +3,28 @@ import discord
 from discord.ui import Button, View
 
 from src.core.userverify import UserVerify
+from src.core.config_parser import BotConfigs
+
+bot_configs = BotConfigs()
+
+async def user_reply(user, bot, chh, channel_created):
+    def check(message):
+        return message.author == user and bool(message.attachments)
+           
+           
+    try:
+        resp = await bot.wait_for('message', check=check , timeout=65.0)
+
+
+    except  asyncio.TimeoutError:
+        await chh.send(f"Time out {user.mention}")
+        await asyncio.sleep(20)
+        await channel_created.delete()
+           
+                   
+    #await resp.attachments[0].save(f'{user.id}-0.jpg')
+           
+    return resp.attachments[0]
 
 
 class VerifyBtn(discord.ui.View):
@@ -15,119 +37,201 @@ class VerifyBtn(discord.ui.View):
     @discord.ui.button(label='Selfie Verifications', style=discord.ButtonStyle.grey, custom_id='emojiprs')
     async def emoji(self, interaction: discord.Interaction, button: discord.ui.Button):
        
+
+
+
        #user = await self.bot.fetch_user(interaction.user.id)
        self.user = await interaction.guild.fetch_member(interaction.user.id)
-       print(self.user.id)
-       print("checking", self.user)
-       
-       guild = interaction.guild
+       self.self_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("self_ver"))
 
-       admin_role = guild.get_role(1034410474189623347)
 
-       overwrites = {
-        guild.default_role: discord.PermissionOverwrite(view_channel=False),
-        admin_role: discord.PermissionOverwrite(view_channel=True),
-        guild.me: discord.PermissionOverwrite(view_channel=True, read_messages=True),
-        interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages = True, attach_files = True) 
-    }
+       #gender roles
+       self.role_male =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("male")) 
+       self.role_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("female"))
+       self.role_trans_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("trans_female"))
+       self.role_non_binary =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("non_binary"))
+       self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("agender"))
+       self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("bigender"))
+       self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("genderfluid"))
        
-       category = discord.utils.get(interaction.guild.categories, id=1034398945083916338)
+       #age roles 
+       self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('18-22')) 
+       self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('23-27')) 
+       self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('28-30+')) 
+
+       gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid]
        
-       """
-       #print(interaction.guild.text_channels)
-       for text_channel in interaction.message.guild.text_channels:
-        print(text_channel.name)
+       age_roles = [self.a18_22, self.a23_27, self.a28_30]
+       
+       import numpy as np
+       gender_check = np.isin(gender_roles, self.user.roles)
+       print(gender_check)
+       
+       age_check = np.isin(age_roles, self.user.roles)
+
+       if True in gender_check:
+        if True in age_check:
+            if self.self_ver_role_obj in self.user.roles:
+                button.disabled = True
+                button.style = discord.ButtonStyle.green
+                button.label = "Already Verified"
+                await interaction.user.send("Already Verified")
+                await interaction.response.edit_message(view=self)
+
+
+            else:
+                print(self.user.id)
+                print("checking", self.user)
+       
+                guild = interaction.guild
+
+                admin_role = guild.get_role(1034410474189623347)
+
+                overwrites = {
+                    guild.default_role: discord.PermissionOverwrite(view_channel=False),
+                    admin_role: discord.PermissionOverwrite(view_channel=True),
+                    guild.me: discord.PermissionOverwrite(view_channel=True, read_messages=True),
+                    interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages = True, attach_files = True) 
+                }
+       
+                category = discord.utils.get(interaction.guild.categories, id=1034398945083916338)
+       
+                """
+                #print(interaction.guild.text_channels)
+                for text_channel in interaction.message.guild.text_channels:
+                print(text_channel.name)
            
-       """
+                """
        
-       channel_name = f"emoji-{interaction.user.id}"
+                channel_name = f"emoji-{interaction.user.id}"
 
       
-       userverify_channels = []
+                userverify_channels = []
        
-       for i in category.channels:
-              userverify_channels.append(i.name)
+                for i in category.channels:
+                    userverify_channels.append(i.name)
        
        
-       print(userverify_channels)
+                print(userverify_channels)
     
-       for i in userverify_channels:
-  
-           if str(self.user.id) in i:
-               self.user_chan = True
+                for i in userverify_channels:
+                    if str(self.user.id) in i:
+                        self.user_chan = True
                
                
-       print(self.user_chan)
+                print(self.user_chan)
        
-       if self.user_chan:        
-           await interaction.response.edit_message(content="verification pending", view=None)  
+                if self.user_chan:        
+                    await interaction.response.edit_message(content="verification pending", view=None)  
                  
-       else:
+                else:
+                    await guild.create_text_channel(channel_name,  category=category, overwrites=overwrites)
            
-           await guild.create_text_channel(channel_name,  category=category, overwrites=overwrites)
-           
-           channel_created = discord.utils.get(guild.channels, name=channel_name)
-           button = Button(label="Go to Channel", url=f"https://discord.com/channels/{interaction.guild.id}/{channel_created.id}" ,  style=discord.ButtonStyle.grey)
-           view = View()
-           view.add_item(button)
-           await interaction.response.edit_message(content="Verification started click the button below to get to the channel! ", view=view)
+                    channel_created = discord.utils.get(guild.channels, name=channel_name)
+                    button = Button(label="Go to Channel", url=f"https://discord.com/channels/{interaction.guild.id}/{channel_created.id}" ,  style=discord.ButtonStyle.grey)
+                    view = View()
+                    view.add_item(button)
+                    await interaction.response.edit_message(content="Verification started click the button below to get to the channel! ", view=view)
            
        
        
-           # THE CHANNEL
-           chh = discord.utils.get(guild.channels, name=channel_name)
-           # interaction.user.mention
-           await chh.send(interaction.user.mention)
+                    # THE CHANNEL
+                    chh = discord.utils.get(guild.channels, name=channel_name)
+                    # interaction.user.mention
+                    await chh.send(interaction.user.mention)
            
-           print(self.user)
-           def check(message):
-               return message.author == self.user and bool(message.attachments)
+                    print(self.user)
+                    
+                    embed_first=discord.Embed(color=discord.Color.blue())
+                    #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
+                    embed_first.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
+                    embed_first.add_field(name="First picture", value=f"make a selfie of you mimicing the following combination of emoji **EMOJI** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+
+                
+                    embed_wanning = discord.Embed(color=discord.Color.blue())
+                    embed_wanning.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
+                    embed_wanning.add_field(name="------------------------",value="Waiting for image  \n\n  **Timeout in 5 minutes**", inline=True)
+                    
+
+                    await chh.send(embed=embed_first)
+                    await chh.send(embed=embed_wanning)
+
+                    await asyncio.sleep(2)
+
+                    """          
+                    def check(message):
+                        return message.author == self.user and bool(message.attachments)
            
            
-           await chh.send('upload your picture')
-           await asyncio.sleep(2)
-           
-           try:
-               resp = await self.bot.wait_for('message', check=check , timeout=65.0)
+                    try:
+                        resp = await self.bot.wait_for('message', check=check , timeout=65.0)
 
 
-           except  asyncio.TimeoutError:
-               await chh.send(f"Time out {self.user.mention}")
-               await asyncio.sleep(20)
-               await channel_created.delete()
+                    except  asyncio.TimeoutError:
+                        await chh.send(f"Time out {self.user.mention}")
+                        await asyncio.sleep(20)
+                        await channel_created.delete()
            
                    
-           #await resp.attachments[0].save(f'{user.id}-0.jpg')
+                    #await resp.attachments[0].save(f'{user.id}-0.jpg')
            
-           image = resp.attachments[0]
+                    image = resp.attachments[0]
            
-           # SELFIE-VERIFICATION 
-           selfie_verf = discord.utils.get(guild.channels, id=1034398479759450172)
-           
-           #await selfie_chh.send(user)
-           embed=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
-           embed.add_field(name="FIRST IMAGE", value=f"T", inline=True)
-           embed.add_field(name="Gender", value=f"Male", inline=True)
-           embed.add_field(name="Age", value=f"24", inline=True)
-           embed.set_image(url=image)
-           embed.set_footer(text=f"{self.user.id}")
-           
-           
-           await selfie_verf.send(embed=embed)
-           
-           await selfie_verf.send(embed=embed, view=UserVerify(self.bot))
-           
-           #await self.bot.add_view(UserVerify(self.user))
+                    """
 
-           print(channel_created.id)
+                    image1 = await user_reply(self.user, self.bot, chh, channel_created)
+
+                    # SELFIE-VERIFICATION 
+                    selfie_verf = discord.utils.get(guild.channels, id=1034398479759450172)
+                    
+                    # First Embed 
+                    embed1=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
+                    embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
+                    embed1.add_field(name="Gender", value=f"Male", inline=True)
+                    embed1.add_field(name="Age", value=f"24", inline=True)
+                    embed1.set_image(url=image1)
+                    embed1.set_footer(text=f"{self.user.id}")
            
-           if (await chh.send(image)):
-               
-               await asyncio.sleep(10)
-               await channel_created.delete()
-       
+           
+                    
 
+                    
+                    if (image1):
+                        embed_second=discord.Embed(color=discord.Color.blue())
+                        #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
+                        embed_second.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
+                        embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji **EMOJI** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
 
+                        await chh.send(embed=embed_second)
+                        image2 = await user_reply(self.user, self.bot, chh, channel_created)
+
+                    #SECOND IMAGE EMBED 
+                    embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
+                    embed2.add_field(name="FIRST IMAGE", value=f"T", inline=True)
+                    embed2.add_field(name="Gender", value=f"Male", inline=True)
+                    embed2.add_field(name="Age", value=f"24", inline=True)
+                    embed2.set_image(url=image2)
+                    embed2.set_footer(text=f"{self.user.id}")
+           
+                    await selfie_verf.send(embed=embed1)
+           
+                    await selfie_verf.send(embed=embed2, view=UserVerify(self.bot))
+           
+                    print(channel_created.id)
+           
+                    if (image2):
+                        await asyncio.sleep(10)
+                        await channel_created.delete()
+
+        else:
+            await interaction.response.defer()
+            await interaction.user.send("you are missing age role")
+         
+
+       else:
+        await interaction.response.defer()
+        await interaction.user.send("you are missing gender role")
+        
 
     
     
@@ -141,18 +245,10 @@ class VerifyBtn(discord.ui.View):
     
     
     
-    @discord.ui.button(label='Age Verifications', style=discord.ButtonStyle.grey, custom_id='videoprs', disabled = True)
-    async def video(self, interaction: discord.Interaction, button: discord.ui.Button):
+    @discord.ui.button(label='Age Verifications', style=discord.ButtonStyle.grey, custom_id='age_verf', disabled = True)
+    async def age_verf(self, interaction: discord.Interaction, button: discord.ui.Button):
         
         """
         Do something 
         """
-       
-        button = Button(label="Go to Channel", style=discord.ButtonStyle.grey)
-        view = View()
-        view.add_item(button)
-        await interaction.response.edit_message(content="Verification started click the button below to get to the channel! ", view=view)
-
-
-    async def getuserobj(self):
-        return self.user
+ 

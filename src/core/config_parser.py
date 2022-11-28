@@ -29,13 +29,57 @@ class BotConfigs:
         id = self.data['guild']['guild_id']
         return id
 
-    
+    def channel_id(self):
+
+        pass
+
+
     def roles(self, role):
 
+        #verf_roles
         if role == "self_ver":
-            age_ver = self.data['roles']['self_ver']
-            return age_ver
-    
+            self_ver = self.data['verf_roles']['self_ver']
+            return self_ver
+
+        if role == "age_ver":
+            self_ver = self.data['verf_roles']['age_ver']
+            return self_ver
+
+
+
+        # gender roles 
+        if role == "male" :
+            return self.data['gender']['male'] 
+
+        if role == "female" :
+            return self.data['gender']['female']
+        
+        if role == "trans_female" :
+            return self.data['gender']['trans_female']
+        
+        if role == "non_binary":
+            return self.data['gender']['non_binary']
+        
+        if role == "agender":
+            return self.data['gender']['agender']
+        
+        if role == "bigender":
+            return self.data['gender']['bigender']
+        
+        if role == "genderfluid": 
+            return self.data['gender']['genderfluid']
+
+
+        #age roles
+        if role == '18-22':
+            return self.data['age_role']['18-22']
+
+        if role == '23-27':
+            return self.data['age_role']['23-27']
+
+        if role == '28-30+':
+            return self.data['age_role']['28-30+']
+
 
 
 """
