@@ -24,10 +24,12 @@ async def user_reply(user, bot, chh, channel_created):
         await asyncio.sleep(20)
         await channel_created.delete()
            
-                   
-    #await resp.attachments[0].save(f'{user.id}-0.jpg')
-           
-    return resp.attachments[0]
+    
+    d = str(resp.attachments[0])
+    format = ['png', 'jpg', 'jpeg', 'heic']
+
+    if d[-3:] in format:     
+        return resp.attachments[0]
 
 
 class VerifyBtn(discord.ui.View):
@@ -181,10 +183,22 @@ class VerifyBtn(discord.ui.View):
                     """
 
                     image1 = await user_reply(self.user, self.bot, chh, channel_created)
+                    
+                    
+                    # Needs refactory
+                    while(True):
 
+                        if image1 == None:
+                            await chh.send("uploaded file can only be a image file")
+                            image1 = await user_reply(self.user, self.bot, chh, channel_created)
+                        
+                        elif image1 !=None:
+                            break
+                    
+
+                    
                     # SELFIE-VERIFICATION CHANNEL
                     selfie_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("self_verification"))
-
                     # First Embed 
                     embed1=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
                     embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
@@ -206,6 +220,17 @@ class VerifyBtn(discord.ui.View):
                         await chh.send(embed=embed_second)
                         image2 = await user_reply(self.user, self.bot, chh, channel_created)
 
+
+                    # Needs refactory
+                    while(True):
+
+                        if image2 == None:
+                            await chh.send("uploaded file can only be a image file")
+                            image2 = await user_reply(self.user, self.bot, chh, channel_created)
+                        
+                        elif image2 !=None:
+                            break
+                    
                     #SECOND IMAGE EMBED 
                     embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
                     embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
@@ -219,7 +244,7 @@ class VerifyBtn(discord.ui.View):
                     await selfie_verf.send(embed=embed2, view=SelfieVerify(self.bot))
            
                     print(channel_created.id)
-           
+        
                     if (image2):
                         await asyncio.sleep(10)
                         await channel_created.delete()
@@ -355,6 +380,15 @@ class VerifyBtn(discord.ui.View):
 
                         image1 = await user_reply(self.user, self.bot, chh, channel_created)
 
+                        while(True):
+                            if image1 == None:
+                                await chh.send("uploaded file can only be a image file")
+                                image1 = await user_reply(self.user, self.bot, chh, channel_created)
+                        
+                            elif image1 !=None:
+                                break
+
+                    
                         # AGE-VERIFICATION CHANNEL
                         age_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("age_Verification"))
 
@@ -375,6 +409,17 @@ class VerifyBtn(discord.ui.View):
 
                             await chh.send(embed=embed_second)
                             image2 = await user_reply(self.user, self.bot, chh, channel_created)
+
+
+                        # Needs refactory
+                        while(True):
+                            if image2 == None:
+                                await chh.send("uploaded file can only be a image file")
+                                image2 = await user_reply(self.user, self.bot, chh, channel_created)
+                        
+                            elif image2 !=None:
+                                break
+                    
 
                         #SECOND IMAGE EMBED 
                         embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
