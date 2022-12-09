@@ -24,7 +24,16 @@ class SelfieVerify(discord.ui.View):
         
         # add the verifiy role
         await user.add_roles(roleObj)
-    
+
+        chn = self.bot.get_channel(1034399992632324107)
+        embed_log = discord.Embed(description=f"Verification of <@{user.id}> **ID**: {user.id} got handled by <@{interaction.user.id}> **ID**: {interaction.user.id} ", 
+                                  color=discord.Color.blue() )
+        embed_log.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
+        embed_log.add_field(name="Verification Button",value="Accepted", inline=False)
+        
+        await chn.send(embed=embed_log)
+         
+
         await user.send("verification accepted")
         await interaction.response.defer()
         await interaction.delete_original_response()

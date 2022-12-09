@@ -26,7 +26,7 @@ class VerificationBot(commands.Bot):
         self.add_view(VerifyBtn(self))
         self.add_view(SelfieVerify(self))
         self.add_view(custom_decline())
-        self.add_view(DeclineBtn())
+        self.add_view(DeclineBtn(self))
 
 
 

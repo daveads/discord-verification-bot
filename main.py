@@ -15,9 +15,7 @@ bot_configs = BotConfigs()
 @bot.command()
 @commands.is_owner()
 async def prepare(ctx: commands.Context):
-
-    print(bot_configs.verfi_image())
-
+    await ctx.message.channel.purge(limit=5)
     await ctx.send(file=discord.File(bot_configs.verfi_image()), view=StartVerify(bot))
 
 
