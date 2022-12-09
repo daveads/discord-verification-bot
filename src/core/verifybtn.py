@@ -10,6 +10,16 @@ from src.core.config_parser import BotConfigs
 
 bot_configs = BotConfigs()
 
+async def get_element(array):
+    element = None
+    for i in range(len(array)):
+        if array[i] == True:
+            element = i
+            #print(i)
+               
+    return element
+
+
 async def user_reply(user, bot, chh, channel_created):
     def check(message):
         return message.author == user and bool(message.attachments)
@@ -56,6 +66,7 @@ class VerifyBtn(discord.ui.View):
        self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("bigender"))
        self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("genderfluid"))
        
+
        #age roles 
        self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('18-22')) 
        self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('23-27')) 
@@ -67,9 +78,23 @@ class VerifyBtn(discord.ui.View):
        
        import numpy as np
        gender_check = np.isin(gender_roles, self.user.roles)
-       print(gender_check)
-       
        age_check = np.isin(age_roles, self.user.roles)
+
+ 
+       """
+       ele = None
+       for i in range(len(age_check)):
+        if age_check[i] == True:
+            ele = i
+
+       print(ele)
+       print("age is between", age_roles[ele])
+       """
+       
+
+       age_get = await get_element(age_check)
+       gender_get = await get_element(gender_check)
+
 
        if True in gender_check:
         if True in age_check:
@@ -82,8 +107,8 @@ class VerifyBtn(discord.ui.View):
 
 
             else:
-                print(self.user.id)
-                print("checking", self.user)
+                #print(self.user.id)
+                #print("checking", self.user)
        
                 guild = interaction.guild
 
@@ -96,7 +121,7 @@ class VerifyBtn(discord.ui.View):
                     interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages = True, attach_files = True) 
                 }
        
-                category = discord.utils.get(interaction.guild.categories, id=1034398945083916338)
+                category = discord.utils.get(interaction.guild.categories, id=1050013059063762984)
        
                 """
                 #print(interaction.guild.text_channels)
@@ -114,7 +139,6 @@ class VerifyBtn(discord.ui.View):
                     userverify_channels.append(i.name)
        
        
-                print(userverify_channels)
 
                 #checks if there is any pending channel
                 for i in userverify_channels:
@@ -143,7 +167,6 @@ class VerifyBtn(discord.ui.View):
                     # interaction.user.mention
                     await chh.send(interaction.user.mention)
            
-                    print(self.user)
                     
                     embed_first=discord.Embed(color=discord.Color.blue())
                     #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
@@ -199,11 +222,12 @@ class VerifyBtn(discord.ui.View):
                     
                     # SELFIE-VERIFICATION CHANNEL
                     selfie_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("self_verification"))
+                    
                     # First Embed 
                     embed1=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
                     embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
-                    embed1.add_field(name="Gender", value=f"Male", inline=True)
-                    embed1.add_field(name="Age", value=f"24", inline=True)
+                    embed1.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
+                    embed1.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                     embed1.set_image(url=image1)
                     embed1.set_footer(text=f"{self.user.id}")
            
@@ -234,8 +258,8 @@ class VerifyBtn(discord.ui.View):
                     #SECOND IMAGE EMBED 
                     embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
                     embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
-                    embed2.add_field(name="Gender", value=f"Male", inline=True)
-                    embed2.add_field(name="Age", value=f"24", inline=True)
+                    embed2.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
+                    embed2.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                     embed2.set_image(url=image2)
                     embed2.set_footer(text=f"{self.user.id}")
            
@@ -303,6 +327,10 @@ class VerifyBtn(discord.ui.View):
 
         age_check = np.isin(age_roles, self.user.roles)
 
+
+        age_get = await get_element(age_check)
+        gender_get = await get_element(gender_check)
+
         if True in gender_check:
             if True in age_check:
                 if self.age_ver_role_obj in self.user.roles:
@@ -326,7 +354,7 @@ class VerifyBtn(discord.ui.View):
                     }
        
 
-                    category = discord.utils.get(interaction.guild.categories, id=1034398945083916338)
+                    category = discord.utils.get(interaction.guild.categories, id=1050013059063762984)
        
                     channel_name = f"age_ver-{interaction.user.id}"
 
@@ -395,8 +423,8 @@ class VerifyBtn(discord.ui.View):
                         # First Embed 
                         embed1=discord.Embed(title=f"{self.user} Age verification",  description="checking", color=discord.Color.blue())
                         embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
-                        embed1.add_field(name="Gender", value=f"Male", inline=True)
-                        embed1.add_field(name="Age", value=f"24", inline=True)
+                        embed1.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
+                        embed1.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                         embed1.set_image(url=image1)
                         embed1.set_footer(text=f"{self.user.id}")
 
@@ -424,16 +452,14 @@ class VerifyBtn(discord.ui.View):
                         #SECOND IMAGE EMBED 
                         embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
                         embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
-                        embed2.add_field(name="Gender", value=f"Male", inline=True)
-                        embed2.add_field(name="Age", value=f"24", inline=True)
+                        embed2.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
+                        embed2.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                         embed2.set_image(url=image2)
                         embed2.set_footer(text=f"{self.user.id}")
            
                         await age_verf.send(embed=embed1)
            
                         await age_verf.send(embed=embed2, view=AgeVerify(self.bot))
-           
-                        print(channel_created.id)
            
                         if (image2):
                             await asyncio.sleep(10)
