@@ -73,12 +73,13 @@ class DeclineBtn(discord.ui.View):
 
      @discord.ui.button(label='Custom Reason', style=discord.ButtonStyle.grey, custom_id='5', row=2)
      async def cr(self, interaction: discord.Interaction, button: discord.ui.Button):
-      await interaction.response.send_modal(custom_decline())
-      await inter_func(interaction)
+      await interaction.response.send_modal(custom_decline(self.bot))
+      #await inter_func(interaction)
+      #await interaction.response.defer()
+      
 
 
      @discord.ui.button(label='Go Back', style=discord.ButtonStyle.red, custom_id='6', row=3)
      async def go_back(self, interaction: discord.Interaction, button: discord.ui.Button):
       #await interaction.response.edit_message(view=None)
       await interaction.response.edit_message(view=self)
-      
