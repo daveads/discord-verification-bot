@@ -48,7 +48,17 @@ class VerifyBtn(discord.ui.View):
         self.bot = bot
         self.user_chan = False
         self.format = ['png', 'jpg', 'jpeg', 'heic']
-        
+
+        self.face = ['😉', '😗', '😱' , '😛', '😜', ]
+        self.hand = ['🖐️', '✋', '👌', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '👍', '👎']
+
+
+        import random
+
+        self.emoji =f"{random.choice(self.face)} {random.choice(self.hand)}"
+
+
+
     @discord.ui.button(label='Selfie Verifications', style=discord.ButtonStyle.grey, custom_id='emojiprs')
     async def emoji(self, interaction: discord.Interaction, button: discord.ui.Button):
        
@@ -171,7 +181,7 @@ class VerifyBtn(discord.ui.View):
                     embed_first=discord.Embed(color=discord.Color.blue())
                     #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
                     embed_first.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
-                    embed_first.add_field(name="First picture", value=f"make a selfie of you mimicing the following combination of emoji **EMOJI** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+                    embed_first.add_field(name="First picture", value=f"make a selfie of you mimicing the following combination of emoji {self.emoji} \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
 
                 
                     embed_wanning = discord.Embed(color=discord.Color.blue())
@@ -239,7 +249,7 @@ class VerifyBtn(discord.ui.View):
                         embed_second=discord.Embed(color=discord.Color.blue())
                         #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
                         embed_second.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
-                        embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji **EMOJI** \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+                        embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji {self.emoji} \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
 
                         await chh.send(embed=embed_second)
                         image2 = await user_reply(self.user, self.bot, chh, channel_created)

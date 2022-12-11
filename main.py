@@ -19,6 +19,19 @@ async def prepare(ctx: commands.Context):
     await ctx.send(file=discord.File(bot_configs.verfi_image()), view=StartVerify(bot))
 
 
+face = ['😉', '😗', '😱' , '😛', '😜', ]
+hand = ['🖐️', '✋', '👌', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '👍', '👎']
+
+@bot.command()
+@commands.is_owner()
+async def emoji(ctx: commands.Context):
+
+    import random 
+    emoji = f"{random.choice(face)} {random.choice(hand)}"
+    
+    await ctx.send(f"{emoji}")
+
+
 async def main():
     await bot.start(os.getenv('token'))
     
