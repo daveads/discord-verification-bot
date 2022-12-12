@@ -1,5 +1,6 @@
 import asyncio
 import discord
+import random
 from discord.ui import Button, View
 
 
@@ -53,10 +54,8 @@ class VerifyBtn(discord.ui.View):
         self.hand = ['🖐️', '✋', '👌', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '👍', '👎']
 
 
-        import random
 
-        self.emoji =f"{random.choice(self.face)} {random.choice(self.hand)}"
-
+        
 
 
     @discord.ui.button(label='Selfie Verifications', style=discord.ButtonStyle.grey, custom_id='emojiprs')
@@ -178,11 +177,11 @@ class VerifyBtn(discord.ui.View):
                     # interaction.user.mention
                     await chh.send(interaction.user.mention)
            
-                    
+                    emoji1 =f"{random.choice(self.face)} {random.choice(self.hand)}"
                     embed_first=discord.Embed(color=discord.Color.blue())
                     #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
                     embed_first.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
-                    embed_first.add_field(name="First picture", value=f"make a selfie of you mimicing the following combination of emoji {self.emoji} \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+                    embed_first.add_field(name="First picture", value=f"make a selfie of you mimicing the following combination of emoji {emoji1} \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
 
                 
                     embed_wanning = discord.Embed(color=discord.Color.blue())
@@ -239,6 +238,7 @@ class VerifyBtn(discord.ui.View):
                     embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
                     embed1.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
                     embed1.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
+                    embed1.add_field(name="Gesture", value=f"{emoji1}", inline=False)
                     embed1.set_image(url=image1)
                     embed1.set_footer(text=f"{self.user.id}")
            
@@ -247,10 +247,11 @@ class VerifyBtn(discord.ui.View):
 
                     
                     if (image1):
+                        emoji2 =f"{random.choice(self.face)} {random.choice(self.hand)}"
                         embed_second=discord.Embed(color=discord.Color.blue())
                         #embed_first.set_thumbnail(url=f"{interaction.user.avatar}")
                         embed_second.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
-                        embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji {self.emoji} \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
+                        embed_second.add_field(name="Second picture", value=f"make a selfie of you mimicing the following combination of emoji {emoji2} \n\n  **UPLOADED FILE SHOULD ONLY BE PICTURES**", inline=True)
 
                         await chh.send(embed=embed_second)
                         image2 = await user_reply(self.user, self.bot, chh, channel_created)
@@ -271,6 +272,7 @@ class VerifyBtn(discord.ui.View):
                     embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
                     embed2.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
                     embed2.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
+                    embed1.add_field(name="Gesture", value=f"{emoji2}", inline=False)
                     embed2.set_image(url=image2)
                     embed2.set_footer(text=f"{self.user.id}")
            
