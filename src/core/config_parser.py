@@ -6,6 +6,10 @@ except ModuleNotFoundError:
     import tomli as tomllib
 
 
+import logging
+from rich.logging import RichHandler
+
+logging.basicConfig(format='%(levelname)s ::: %(message)s')
 
 
 """
@@ -31,13 +35,28 @@ class BotConfigs:
 
     def channel_id(self, chn):
 
-        if chn == "self_verification":
-            return self.data['channels_id']['self_verification']
-
-        if chn == "age_Verification":
-            return self.data['channels_id']['age_Verification']
+        if chn in self.data['channels_id']:
+            return self.data['channels_id'][chn]
 
  
+
+    def gender(self, gender):
+        if gender in self.data["gender"]:
+            return self.data['gender'][gender]
+
+
+    def age_roles(self, age):
+        if age in self.data['age_role']:
+            return self.data['age_role'][age]
+
+
+    def verfy_roles(self, role):
+        if role in self.data['roles']:
+            return self.data['roles'][role]
+
+    
+
+    """
     def roles(self, role):
 
         #verf_roles
@@ -83,6 +102,8 @@ class BotConfigs:
 
         if role == '28-30+':
             return self.data['age_role']['28-30+']
+    """
+
 
 
 

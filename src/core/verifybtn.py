@@ -64,23 +64,23 @@ class VerifyBtn(discord.ui.View):
        
 
        self.user = await interaction.guild.fetch_member(interaction.user.id)
-       self.self_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("self_ver"))
+       self.self_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
 
 
        #gender roles
-       self.role_male =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("male")) 
-       self.role_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("female"))
-       self.role_trans_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("trans_female"))
-       self.role_non_binary =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("non_binary"))
-       self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("agender"))
-       self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("bigender"))
-       self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("genderfluid"))
+       self.role_male =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender('male')) 
+       self.role_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("female"))
+       self.role_trans_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("trans_female"))
+       self.role_non_binary =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("non_binary"))
+       self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("agender"))
+       self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("bigender"))
+       self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("genderfluid"))
        
 
        #age roles 
-       self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('18-22')) 
-       self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('23-27')) 
-       self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('28-30+')) 
+       self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('18-22')) 
+       self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('23-27')) 
+       self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('28-30+')) 
 
        gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid]
        
@@ -122,7 +122,8 @@ class VerifyBtn(discord.ui.View):
        
                 guild = interaction.guild
 
-                admin_role = guild.get_role(1034410474189623347)
+                admin_role = guild.get_role(bot_configs.verfy_roles('admin'))
+                
 
                 overwrites = {
                     guild.default_role: discord.PermissionOverwrite(view_channel=False),
@@ -131,7 +132,7 @@ class VerifyBtn(discord.ui.View):
                     interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages = True, attach_files = True) 
                 }
        
-                category = discord.utils.get(interaction.guild.categories, id=1050013059063762984)
+                category = discord.utils.get(interaction.guild.categories, id=bot_configs.channel_id('verify_category'))
        
                 """
                 #print(interaction.guild.text_channels)
@@ -312,21 +313,21 @@ class VerifyBtn(discord.ui.View):
         Do something 
         """
         self.user = await interaction.guild.fetch_member(interaction.user.id)
-        self.age_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("age_ver"))
+        self.age_ver_role_obj = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles("age_ver"))
 
         #gender roles
-        self.role_male =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("male")) 
-        self.role_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("female"))
-        self.role_trans_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("trans_female"))
-        self.role_non_binary =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("non_binary"))
-        self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.roles("agender"))
-        self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("bigender"))
-        self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("genderfluid"))
+        self.role_male =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("male")) 
+        self.role_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("female"))
+        self.role_trans_female =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("trans_female"))
+        self.role_non_binary =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("non_binary"))
+        self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("agender"))
+        self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("bigender"))
+        self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("genderfluid"))
        
         #age roles 
-        self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('18-22')) 
-        self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('23-27')) 
-        self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.roles('28-30+')) 
+        self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('18-22')) 
+        self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('23-27')) 
+        self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('28-30+')) 
 
         gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid]
        
@@ -354,7 +355,7 @@ class VerifyBtn(discord.ui.View):
 
                     guild = interaction.guild
 
-                    admin_role = guild.get_role(1034410474189623347)
+                    admin_role = guild.get_role(bot_configs.verfy_roles('admin'))
 
                     overwrites = {
                         guild.default_role: discord.PermissionOverwrite(view_channel=False),
@@ -364,7 +365,7 @@ class VerifyBtn(discord.ui.View):
                     }
        
 
-                    category = discord.utils.get(interaction.guild.categories, id=1050013059063762984)
+                    category = discord.utils.get(interaction.guild.categories, id=bot_configs.channel_id('verify_category'))
        
                     channel_name = f"age_ver-{interaction.user.id}"
 

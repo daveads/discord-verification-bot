@@ -1,8 +1,12 @@
 import discord
+from src.core.config_parser import BotConfigs
+
+
+bot_configs = BotConfigs()
 
 async def embed_log(bot, interaction, user, reason):
 
-   chn = bot.get_channel(1034399992632324107)
+   chn = bot.get_channel(bot_configs.channel_id('verification_log'))
    embed_log = discord.Embed(description=f"Verification of <@{user.id}> **ID**: {user.id} got handled by <@{interaction.user.id}> **ID**: {interaction.user.id} ", 
                             color=discord.Color.blue() )
    embed_log.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")

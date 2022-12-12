@@ -1,10 +1,10 @@
 [creator]
 god_mode = 0
 
-[verf_roles]
+[roles]
 age_ver = 1046031213015605248
 self_ver = 1046031060481360002
-admin = 0
+admin = 1034410474189623347
 moderator = 0
 
 [gender]
@@ -27,6 +27,7 @@ self_verification = 1034398479759450172
 age_Verification = 1034398805862395954
 verification_log = 1034399992632324107
 verification = 1034400213391118387
+verify_category = 1050013059063762984
 
 [image]
 verfi_image = "ID-Verification-post.png"

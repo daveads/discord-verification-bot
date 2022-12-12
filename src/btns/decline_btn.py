@@ -1,8 +1,11 @@
 import discord
 from src.btns.custom_decline_btn import custom_decline
+from src.core.config_parser import BotConfigs
 #from src.core.userverify import UserVerify
 #from ..core.userverify import UserVerify as ver
 
+
+bot_configs = BotConfigs()
 
 async def inter_func(interaction):
       await interaction.response.defer()
@@ -18,7 +21,7 @@ async def user_obj(interaction):
 
 async def embed_log(bot, interaction, user, reason):
 
-   chn = bot.get_channel(1034399992632324107)
+   chn = bot.get_channel(bot_configs.channel_id('verification_log'))
    embed_log = discord.Embed(description=f"Verification of <@{user.id}> **ID**: {user.id} got handled by <@{interaction.user.id}> **ID**: {interaction.user.id} ", 
                                   color=discord.Color.blue() )
    embed_log.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")

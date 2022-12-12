@@ -13,7 +13,7 @@ class AgeVerify(discord.ui.View):
     @discord.ui.button(label='Accept', style=discord.ButtonStyle.green, custom_id='accepta')
     async def accept(self, interaction: discord.Interaction, button: discord.ui.Button):
 
-        roleObj = discord.utils.get(interaction.guild.roles, id=bot_configs.roles("age_ver"))
+        roleObj = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver'))
 
         embeds = interaction.message.embeds[0].to_dict()
         
@@ -25,7 +25,8 @@ class AgeVerify(discord.ui.View):
         # add the verifiy role
         await user.add_roles(roleObj)
       
-        chn = self.bot.get_channel(1034399992632324107)
+        chn = self.bot.get_channel(bot_configs.channel_id('verification_log')) 
+
         embed_log = discord.Embed(description=f"Verification of <@{user.id}> **ID**: {user.id} got handled by <@{interaction.user.id}> **ID**: {interaction.user.id} ", 
                                   color=discord.Color.blue() )
         embed_log.set_author(name=f"{interaction.guild.name} Verification", icon_url=f"{interaction.guild.icon.url}")
