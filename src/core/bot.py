@@ -5,8 +5,7 @@ from src.core.startverify  import StartVerify
 from src.core.verifybtn    import VerifyBtn
 from src.core.selfieverify  import SelfieVerify
 from src.btns.custom_decline_btn import custom_decline
-from src.btns.decline_btn import DeclineBtn
-
+from src.btns.selfie_decline_btn import DeclineBtn
 from src.core.config_parser import BotConfigs
 
 

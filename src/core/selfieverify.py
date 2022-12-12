@@ -2,7 +2,8 @@ import discord
 from discord.ui import Button, View
 from src.core.config_parser import BotConfigs
 
-from src.btns.decline_btn import DeclineBtn as dec
+from src.btns.selfie_decline_btn import DeclineBtn as dec
+
 bot_configs = BotConfigs()
 
 class SelfieVerify(discord.ui.View):

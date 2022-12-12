@@ -1,8 +1,6 @@
 import discord
 from src.btns.custom_decline_btn import custom_decline
 from src.core.config_parser import BotConfigs
-#from src.core.userverify import UserVerify
-#from ..core.userverify import UserVerify as ver
 
 
 bot_configs = BotConfigs()
@@ -85,4 +83,6 @@ class DeclineBtn(discord.ui.View):
      @discord.ui.button(label='Go Back', style=discord.ButtonStyle.red, custom_id='6', row=3)
      async def go_back(self, interaction: discord.Interaction, button: discord.ui.Button):
       #await interaction.response.edit_message(view=None)
-      await interaction.response.edit_message(view=self)
+
+      from src.core.selfieverify import SelfieVerify
+      await interaction.response.edit_message(view=SelfieVerify(self.bot))

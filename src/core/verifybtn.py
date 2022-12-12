@@ -234,8 +234,7 @@ class VerifyBtn(discord.ui.View):
                     selfie_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("self_verification"))
                     
                     # First Embed 
-                    embed1=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
-                    embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
+                    embed1=discord.Embed(title="FIRST IMAGE",  description=f"{self.user} Selfie verification", color=discord.Color.blue())
                     embed1.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
                     embed1.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                     embed1.add_field(name="Gesture", value=f"{emoji1}", inline=False)
@@ -268,11 +267,10 @@ class VerifyBtn(discord.ui.View):
                             break
                     
                     #SECOND IMAGE EMBED 
-                    embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
-                    embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
+                    embed2=discord.Embed(title="SECOND IMAGE", description=f"{self.user} Selfie verification", color=discord.Color.blue())
                     embed2.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
                     embed2.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
-                    embed1.add_field(name="Gesture", value=f"{emoji2}", inline=False)
+                    embed2.add_field(name="Gesture", value=f"{emoji2}", inline=False)
                     embed2.set_image(url=image2)
                     embed2.set_footer(text=f"{self.user.id}")
            
@@ -434,8 +432,7 @@ class VerifyBtn(discord.ui.View):
                         age_verf = discord.utils.get(guild.channels, id=bot_configs.channel_id("age_Verification"))
 
                         # First Embed 
-                        embed1=discord.Embed(title=f"{self.user} Age verification",  description="checking", color=discord.Color.blue())
-                        embed1.add_field(name="FIRST IMAGE", value=f"T", inline=True)
+                        embed1=discord.Embed(title="FIRST IMAGE",  description=f"{self.user} Age verification", color=discord.Color.blue())
                         embed1.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
                         embed1.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                         embed1.set_image(url=image1)
@@ -463,8 +460,7 @@ class VerifyBtn(discord.ui.View):
                     
 
                         #SECOND IMAGE EMBED 
-                        embed2=discord.Embed(title=f"{self.user} Selfie verification",  description="checking", color=discord.Color.blue())
-                        embed2.add_field(name="SECOND IMAGE", value=f"T", inline=True)
+                        embed2=discord.Embed(title="SECOND IMAGE",  description=f"{self.user} Selfie verification", color=discord.Color.blue())
                         embed2.add_field(name="Gender", value=f"{gender_roles[gender_get]}", inline=True)
                         embed2.add_field(name="Age", value=f"{age_roles[age_get]}", inline=True)
                         embed2.set_image(url=image2)

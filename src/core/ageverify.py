@@ -2,7 +2,7 @@ from multiprocessing import Value
 import discord
 from src.core.config_parser import BotConfigs
 
-from src.btns.decline_btn import DeclineBtn as dec
+from src.btns.age_decline_btn import AgeDeclineBtn as dec
 bot_configs = BotConfigs()
 
 class AgeVerify(discord.ui.View):
