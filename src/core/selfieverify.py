@@ -22,7 +22,9 @@ class SelfieVerify(discord.ui.View):
         print("user to give role id", user_id)
 
         user = await interaction.guild.fetch_member(user_id)
-        
+
+
+
         # add the verifiy role
         await user.add_roles(roleObj)
 

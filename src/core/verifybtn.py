@@ -105,6 +105,14 @@ class VerifyBtn(discord.ui.View):
        gender_get = await get_element(gender_check)
 
 
+       channel = self.bot.get_channel(bot_configs.channel_id('self_verification'))
+       c = []
+       async for m in channel.history(limit=100):
+        for i in m.embeds:
+            a = i.to_dict()
+            c.append(a['footer']['text'])
+    
+
        if True in gender_check:
         if True in age_check:
             if self.self_ver_role_obj in self.user.roles:
@@ -114,6 +122,12 @@ class VerifyBtn(discord.ui.View):
                 await interaction.user.send("Already Verified")
                 await interaction.response.edit_message(view=self)
 
+            elif str(interaction.user.id) in c:
+                button.disabled = True
+                button.style = discord.ButtonStyle.danger
+                button.label = "Verification Pending"
+                await interaction.user.send("Already Verified")
+                await interaction.response.edit_message(view=self)
 
             else:
                 #print(self.user.id)
@@ -342,12 +356,27 @@ class VerifyBtn(discord.ui.View):
         age_get = await get_element(age_check)
         gender_get = await get_element(gender_check)
 
+
+        channel = self.bot.get_channel(bot_configs.channel_id('age_Verification'))
+        c = []
+        async for m in channel.history(limit=100):
+            for i in m.embeds:
+                a = i.to_dict()
+                c.append(a['footer']['text'])
+    
         if True in gender_check:
             if True in age_check:
                 if self.age_ver_role_obj in self.user.roles:
                     button.disabled = True
                     button.style = discord.ButtonStyle.green
                     button.label = "Already Verified"
+                    await interaction.user.send("Already Verified")
+                    await interaction.response.edit_message(view=self)
+                
+                elif str(interaction.user.id) in c:
+                    button.disabled = True
+                    button.style = discord.ButtonStyle.danger
+                    button.label = "Verification Pending"
                     await interaction.user.send("Already Verified")
                     await interaction.response.edit_message(view=self)
 

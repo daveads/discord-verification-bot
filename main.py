@@ -32,6 +32,22 @@ async def emoji(ctx: commands.Context):
     await ctx.send(f"{emoji}")
 
 
+    """
+    # Testing
+    channel = bot.get_channel(1054400575170678825)
+    c = []
+    async for m in channel.history(limit=100):
+        for i in m.embeds:
+            a = i.to_dict()
+            c.append(a['footer']['text'])
+    
+    print(c)
+
+    if '840152379122384896' in c:
+        print("verification pending")
+
+    """
+    
 async def main():
     await bot.start(os.getenv('token'))
     
