@@ -17,6 +17,7 @@ class VerificationBot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.message_content = True
+        intents.members = True
 
         super().__init__(command_prefix=commands.when_mentioned_or('$'), intents=intents)
 

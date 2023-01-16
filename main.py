@@ -8,9 +8,22 @@ from src.core.startverify  import StartVerify
 from src.core.bot   import VerificationBot
 from src.core.config_parser import BotConfigs
 
+
+from src.model import verfdb
+# intializing database
+verfdb.main()
+
 load_dotenv()
 bot = VerificationBot()
 bot_configs = BotConfigs()
+
+
+async def load():
+    for f in os.listdir("cogs"):
+        if f.endswith(".py"):
+            await bot.load_extension(f'cogs.{f[:-3]}')
+
+
 
 @bot.command()
 @commands.is_owner()
@@ -21,6 +34,7 @@ async def prepare(ctx: commands.Context):
 
 face = ['😉', '😗', '😱' , '😛', '😜', ]
 hand = ['🖐️', '✋', '👌', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '👍', '👎']
+
 
 @bot.command()
 @commands.is_owner()
@@ -49,6 +63,7 @@ async def emoji(ctx: commands.Context):
     """
     
 async def main():
+    await load()
     await bot.start(os.getenv('token'))
     
     
