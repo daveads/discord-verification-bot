@@ -3,3 +3,4 @@ env
 *profile.db
 *.pyc
 verification.db
+bot_config.toml
