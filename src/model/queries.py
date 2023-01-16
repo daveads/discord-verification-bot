@@ -10,7 +10,7 @@ class verifiedque():
 
     def get_user(self, id):
         try:
-            self.cur.execute(f"SELECT * FROM verifi WHERE username_id='{id}'")
+            self.cur.execute(f"SELECT * FROM verifi WHERE user_id='{id}'")
             user_in_db= self.cur.fetchone();
             return user_in_db
 
