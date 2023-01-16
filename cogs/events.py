@@ -8,7 +8,7 @@ class Events(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-
+        self.dic_key = ['id','username','user_id', "age_verified", "age_verified_g", "selfie_verified", "selfie_verified_g", "age_verification_date", "selfie_verification_date"]
 
     #@commands.guild_only()
     @commands.Cog.listener()
@@ -18,17 +18,28 @@ class Events(commands.Cog):
         print(member.id)
         
         if user_in_db.get_user(member.id):
-            print("<<<<< USER IS IN DB >>>>>")
-            
-            """
-            IF selfie_verified:
-                add(selfie)
-                add(selfie_g)
-        
-            IF age_verified:
-                add(agev)
-                add(agevg)
-            """
+                
+            user_d = user_in_db.get_user(member.id)
+            user_data ={}
+
+            for i in range(len(self.dic_key)):
+                user_data[self.dic_key[i]] = user_d[i]
+
+            print(user_data)
+
+
+            if user_data["age_verified"]:
+                ageverg = discord.utils.get(guild.roles, id=int(user_data["age_verified_g"]))
+
+                member.add_roles(ageverg)
+                #member.add_roles(agev)
+
+
+            if user_data["selfie_verified"]:
+                selfieg = discord.utils.get(guild.roles, id=int(user_data["selfie_verified_g"]))
+                
+                member.add_role(selfieg)
+                #membrer.add_roles(selfiev)
 
         else:
             print("<<<<< USER has no roles >>>>>")
