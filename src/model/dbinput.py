@@ -1,3 +1,4 @@
+from codecs import getencoder
 import sqlite3
 from datetime import datetime
 
@@ -5,9 +6,11 @@ con = sqlite3.connect("verification.db")
 cur = con.cursor()
 
 class verify_data():
-  def __init__(self, username, user_id, age_verified, age_verified_g, selfie_verified, selfie_verified_g,  age_verification_date,  selfie_verification_date):
+  def __init__(self, username, user_id, gender, age, age_verified, age_verified_g, selfie_verified, selfie_verified_g,  age_verification_date,  selfie_verification_date):
     self.username = username
     self.user_id = user_id
+    self.gender = gender
+    self.age = age
     self.age_verified = age_verified
     self.age_verified_g = age_verified_g
     self.selfie_verified = selfie_verified
@@ -17,9 +20,11 @@ class verify_data():
     #datetime.utcnow().strftime("%d-%m-%Y")
 
     try:
-      cur.execute("INSERT INTO verifi VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)", (
+      cur.execute("INSERT INTO verifi VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (
       self.username,
       self.user_id,
+      self.gender,
+      self.age,
       self.age_verified,
       self.age_verified_g,
       self.selfie_verified,

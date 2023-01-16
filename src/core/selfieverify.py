@@ -16,13 +16,24 @@ from src.model import queries
 
 user_in_db = queries.verifiedque()
 
-def dbinputfun(user, roleid):
+async def get_element(array):
+    element = None
+    for i in range(len(array)):
+        if array[i] == True:
+            element = i
+            #print(i)
+               
+    return element
+
+
+def dbinputfun(user, roleid, gender, age):
     if user_in_db.get_user(user.id):
         user_in_db.update("selfie_verified_g", f"{roleid}", user.id)
+        user_in_db.update("selfie_verified", 1, user.id)
         user_in_db.update("selfie_verification_date", datetime.utcnow().strftime("%d-%m-%Y"), user.id)
 
     else:
-        dbinput.verify_data(str(user), str(user.id), age_verified= 0, age_verified_g = None, selfie_verified = 1, selfie_verified_g = f"{roleid}", age_verification_date = None,  selfie_verification_date = datetime.utcnow().strftime("%d-%m-%Y"))
+        dbinput.verify_data(str(user), str(user.id), gender=gender, age =age, age_verified= 0, age_verified_g = None, selfie_verified = 1, selfie_verified_g = f"{roleid}", age_verification_date = None,  selfie_verification_date = datetime.utcnow().strftime("%d-%m-%Y"))
 
 
 class SelfieVerify(discord.ui.View):
@@ -63,12 +74,31 @@ class SelfieVerify(discord.ui.View):
         self.role_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("t_ftm"))
         self.role_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("t_mtf"))
 
-        #dbinput.verify_data(user, user.id, age_verified= 0, age_verified_g = None, selfie_verified = 1, selfie_verified_g = f"", age_verification_date = None ,  selfie_verification_date = datetime.utcnow().strftime("%d-%m-%Y"))
+        self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('18-22')) 
+        self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('23-27')) 
+        self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('28-30+'))
+
+        gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid, self.role_t_ftm, self.role_t_mtf]
+        age_roles = [self.a18_22, self.a23_27, self.a28_30]
+        
+        import numpy as np
+        gender_check = np.isin(gender_roles, user.roles)
+        age_check = np.isin(age_roles, user.roles)
+
+
+        age_get = await get_element(age_check)
+        gender_get = await get_element(gender_check)
+        
+        print("gender", gender_roles[gender_get].id)
+        print("age", age_roles[age_get].id)
+
+        gender = gender_roles[gender_get].id
+        age = age_roles[age_get].id
 
         # add selfie verified role
         if self.role_male in user.roles:
 
-            dbinputfun(user,self.self_ver_m.id)
+            dbinputfun(user,self.self_ver_m.id, gender, age)
             await user.add_roles(self.self_ver_m)
 
             

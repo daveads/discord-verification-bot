@@ -12,6 +12,9 @@ def main():
             username VARCHAR(255),
             user_id VARCHAR(25),
             
+            gender VARCHAR(25),
+            age VARCHAR(25),
+
             age_verified int,
             age_verified_g  VARCHAR(25),
             
@@ -35,9 +38,12 @@ def main():
 
     if len(test0) == 0:
         try:
-            cur.execute("INSERT INTO verifi VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);", (
+            cur.execute("INSERT INTO verifi VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", (
                                                                   "creator0000",
                                                                   "00000000022331",
+                                                                
+                                                                    "355775675675467753",
+                                                                    "546757676768673433",
 
                                                                    1,
                                                                    "3456789532345678",
