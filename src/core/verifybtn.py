@@ -58,8 +58,8 @@ class VerifyBtn(discord.ui.View):
         
 
 
-    @discord.ui.button(label='Selfie Verifications', style=discord.ButtonStyle.grey, custom_id='emojiprs')
-    async def emoji(self, interaction: discord.Interaction, button: discord.ui.Button):
+    @discord.ui.button(label='Selfie Verifications', style=discord.ButtonStyle.grey, custom_id='selfie')
+    async def selfie(self, interaction: discord.Interaction, button: discord.ui.Button):
        
 
        self.user = await interaction.guild.fetch_member(interaction.user.id)
@@ -74,14 +74,17 @@ class VerifyBtn(discord.ui.View):
        self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("agender"))
        self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("bigender"))
        self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("genderfluid"))
-       
+       self.role_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("t_ftm"))
+       self.role_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("t_mtf"))
+
+
 
        #age roles 
        self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('18-22')) 
        self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('23-27')) 
        self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('28-30+')) 
 
-       gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid]
+       gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid, self.role_t_ftm, self.role_t_mtf]
        
        age_roles = [self.a18_22, self.a23_27, self.a28_30]
        
@@ -337,13 +340,15 @@ class VerifyBtn(discord.ui.View):
         self.role_agender =  discord.utils.get(interaction.guild.roles, id=bot_configs.gender("agender"))
         self.role_bigender = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("bigender"))
         self.role_genderfluid = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("genderfluid"))
-       
+        self.role_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("t_ftm"))
+        self.role_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.gender("t_mtf"))
+        
         #age roles 
         self.a18_22 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('18-22')) 
         self.a23_27 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('23-27')) 
         self.a28_30 = discord.utils.get(interaction.guild.roles, id=bot_configs.age_roles('28-30+')) 
 
-        gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid]
+        gender_roles = [self.role_male, self.role_female, self.role_trans_female, self.role_non_binary, self.role_agender, self.role_bigender, self.role_genderfluid, self.role_t_ftm, self.role_t_mtf]
        
         age_roles = [self.a18_22, self.a23_27, self.a28_30]
        

@@ -35,8 +35,8 @@ class AgeVerify(discord.ui.View):
         await chn.send(embed=embed_log)
          
 
-        await user.send("verification accepted ***")
         await interaction.response.defer()
+        await user.send("verification accepted ***")
         await interaction.delete_original_response()
         await interaction.channel.purge(limit=1)
 

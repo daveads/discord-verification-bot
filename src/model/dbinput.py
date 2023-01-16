@@ -4,7 +4,7 @@ from datetime import datetime
 con = sqlite3.connect("verification.db")
 cur = con.cursor()
 
-class profile_data():
+class verify_data():
   def __init__(self, username, user_id, age_verified, age_verified_g, selfie_verified, selfie_verified_g,  age_verification_date,  selfie_verification_date):
     self.username = username
     self.user_id = user_id

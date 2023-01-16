@@ -20,7 +20,7 @@ class verifiedque():
 
     def update(self, table, value, username_id):
         try:
-            self.cur.execute(f"UPDATE verifi SET {table} ='{value}' WHERE username_id='{username_id}'")
+            self.cur.execute(f"UPDATE verifi SET {table} ='{value}' WHERE user_id='{username_id}'")
 
         except sqlite3.Error as error:
             print(f"unable to update user {table} >>", error)
