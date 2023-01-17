@@ -56,11 +56,11 @@ class SelfieVerify(discord.ui.View):
 
         #selfie_verfy_gender_roles
         self.self_ver_m =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver_m'))
-        self.self_ver_f=  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.self_ver_nb =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.self_ver_gf =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.self_ver_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.self_ver_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
+        self.self_ver_f=  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver_f'))
+        self.self_ver_nb =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver_nb'))
+        self.self_ver_gf =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver_gf'))
+        self.self_ver_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver_t_ftm'))
+        self.self_ver_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver_t_mtf'))
 
 
         #gender roles

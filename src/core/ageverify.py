@@ -52,11 +52,11 @@ class AgeVerify(discord.ui.View):
 
         #selfie_verfy_gender_roles
         self.age_ver_m =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver_m'))
-        self.age_ver_f=  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.age_ver_nb =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.age_ver_gf =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.age_ver_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
-        self.age_ver_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('self_ver'))
+        self.age_ver_f=  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver_f'))
+        self.age_ver_nb =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver_nb'))
+        self.age_ver_gf =  discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver_gf'))
+        self.age_ver_t_ftm = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver_t_ftm'))
+        self.age_ver_t_mtf = discord.utils.get(interaction.guild.roles, id=bot_configs.verfy_roles('age_ver_t_mtf'))
 
 
         #gender roles
