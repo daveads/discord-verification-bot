@@ -49,10 +49,7 @@ class Events(commands.Cog):
 
         else:
             print("<<<<< USER has no roles >>>>>")
-            roleObj = discord.utils.get(guild.roles, id=1046031060481360002)
-
-            await member.add_roles(roleObj)
-
+           
         
         
 
