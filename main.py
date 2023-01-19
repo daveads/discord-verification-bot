@@ -29,7 +29,13 @@ async def load():
 @commands.is_owner()
 async def prepare(ctx: commands.Context):
     await ctx.message.channel.purge(limit=5)
-    await ctx.send(file=discord.File(bot_configs.verfi_image()), view=StartVerify(bot))
+    embed = discord.Embed(
+            title="Verification Requirement",
+            description="`Age role`  and `Gender role` Needed for Verification",
+            color=discord.Colour(0x2f3136)
+        )
+    await ctx.send(embed=embed)
+    await ctx.send(file=discord.File(bot_configs.verfi_image()),view=StartVerify(bot))
 
 
 face = ['😉', '😗', '😱' , '😛', '😜', ]
