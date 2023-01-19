@@ -27,7 +27,7 @@ async def load():
 
 @bot.command()
 @commands.is_owner()
-async def prepare(ctx: commands.Context):
+async def prepv(ctx: commands.Context):
     await ctx.message.channel.purge(limit=5)
     embed = discord.Embed(
             title="Verification Requirement",
