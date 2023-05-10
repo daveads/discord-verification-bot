@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 
+#buttons
 from src.core.startverify  import StartVerify
 from src.core.verifybtn    import VerifyBtn
 from src.core.selfieverify  import SelfieVerify
